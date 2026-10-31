@@ -1,3 +1,5 @@
+import groovy.xml.XmlSlurper
+
 plugins {
     // 1.21.x ist obfuskiert -> "-remap"-Variante. (26.x nutzt 'net.fabricmc.fabric-loom', siehe README)
     id 'net.fabricmc.fabric-loom-remap' version '1.15-SNAPSHOT'
