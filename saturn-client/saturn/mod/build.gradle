@@ -1,0 +1,47 @@
+plugins {
+    // 1.21.x ist obfuskiert -> "-remap"-Variante. (26.x nutzt 'net.fabricmc.fabric-loom', siehe README)
+    id 'net.fabricmc.fabric-loom-remap' version '1.15-SNAPSHOT'
+}
+
+// ./gradlew build -Pmc=1.21.4
+def mc = (project.findProperty('mc') ?: '1.21.4').toString()
+def p = mc.tokenize('.')*.toInteger()
+if (p[0] != 1 || p[1] != 21) {
+    throw new GradleException("Saturn: Minecraft ${mc} wird von diesem Build noch nicht unterstützt (siehe README).")
+}
+def patch = p.size() > 2 ? p[2] : 0
+// Welche API-Generation von GuiGraphics/Keybinds/HUD gilt?
+def compat = patch >= 9 ? 'gui3' : (patch >= 6 ? 'gui2' : 'legacy')
+
+// Neueste Loader-/Fabric-API-Version direkt aus dem Fabric-Maven holen -> Updates passieren automatisch.
+def latest = { String url, Closure<Boolean> ok ->
+    def xml = new XmlSlurper().parse(url)
+    def all = xml.versioning.versions.version.collect { it.text() }.findAll(ok)
+    if (all.isEmpty()) throw new GradleException("Keine passende Version bei ${url}")
+    all.last()
+}
+def loaderVer = project.findProperty('loader') ?: latest('https://maven.fabricmc.net/net/fabricmc/fabric-loader/maven-metadata.xml') { !it.contains('-') }
+def apiVer    = project.findProperty('fabric_api') ?: latest('https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml') { it.endsWith('+' + mc) }
+
+group = 'dev.saturn'
+version = ''
+base.archivesName = "saturn-${mc}"
+
+sourceSets.main.java.srcDir "src/compat/${compat}/java"
+
+repositories { mavenCentral() }
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mc}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${loaderVer}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${apiVer}"
+}
+
+tasks.withType(JavaCompile).configureEach { options.release = 21 }
+
+processResources {
+    inputs.property 'mc', mc
+    inputs.property 'mod_version', project.mod_version
+    filesMatching('fabric.mod.json') { expand 'mc': mc, 'modVersion': project.mod_version }
+}
