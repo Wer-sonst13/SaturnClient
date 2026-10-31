@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "saturn",
+  "version": "${modVersion}",
+  "name": "Saturn",
+  "description": "Saturn Client: HUD-Module und Menü (Rechts-Shift).",
+  "authors": ["Saturn"],
+  "environment": "client",
+  "entrypoints": { "client": ["dev.saturn.SaturnClient"] },
+  "mixins": ["saturn.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "${mc}",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
