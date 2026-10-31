@@ -69,6 +69,7 @@ jobs:
 
   release:
     needs: [mod, launcher]
+    if: ${{ !cancelled() && needs.launcher.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
