@@ -11,8 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
 public class GuiMixin {
-    @Inject(method = "displayScoreboardSidebar", at = @At("HEAD"))
-    private void saturn$begin(GuiGraphics g, Objective o, CallbackInfo ci) { ScoreboardModule.begin(g); }
+    @Inject(method = "displayScoreboardSidebar", at = @At("HEAD"), cancellable = true)
+    private void saturn$begin(GuiGraphics g, Objective o, CallbackInfo ci) {
+        if (ScoreboardModule.begin(g)) ci.cancel();
+    }
 
     @Inject(method = "displayScoreboardSidebar", at = @At("RETURN"))
     private void saturn$end(GuiGraphics g, Objective o, CallbackInfo ci) { ScoreboardModule.end(g); }

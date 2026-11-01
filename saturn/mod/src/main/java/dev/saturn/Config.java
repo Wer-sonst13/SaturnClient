@@ -20,6 +20,15 @@ public final class Config {
         public float scale = 1f;
         public boolean background = true;
         public boolean shadow = true;
+        public Map<String, Float> v = new HashMap<>();   // modulspezifische Einstellungen
+
+        public float val(String k, float def) {
+            if (v == null) v = new HashMap<>();
+            Float x = v.get(k);
+            return x == null ? def : x;
+        }
+        public boolean on(String k, boolean def) { return val(k, def ? 1f : 0f) >= 0.5f; }
+        public void put(String k, float x) { if (v == null) v = new HashMap<>(); v.put(k, x); }
     }
 
     private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("saturn.json");

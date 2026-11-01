@@ -16,6 +16,7 @@ public class SaturnClient implements ClientModInitializer {
             while (menuKey.consumeClick()) {
                 if (mc.screen == null) mc.setScreen(new MenuScreen());
             }
+            for (Module m : Hud.ALL) m.tick(mc);
         });
         Compat.registerHud(Hud::render);
     }

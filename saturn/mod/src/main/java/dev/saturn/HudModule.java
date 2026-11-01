@@ -4,20 +4,20 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 
-public abstract class HudModule {
-    public final String id, name, desc;
+public abstract class HudModule extends Module {
     public final float defX, defY;
-    public final Config.State s;
 
-    protected HudModule(String id, String name, String desc, boolean defOn, float defX, float defY) {
-        this.id = id; this.name = name; this.desc = desc; this.defX = defX; this.defY = defY;
-        this.s = Config.get(id, defOn, defX, defY);
+    protected HudModule(String id, String name, String desc, String cat, boolean on, float x, float y) {
+        super(id, name, desc, cat, on, x, y);
+        this.defX = x; this.defY = y;
     }
 
-    protected abstract List<String> lines(Minecraft mc);
-
+    @Override public boolean hud() { return true; }
+    public boolean hasBg() { return true; }
     /** true = kein eigenes Rendern, sondern Transformation eines Vanilla-Elements. */
     public boolean custom() { return false; }
+
+    protected abstract List<String> lines(Minecraft mc);
 
     public void resetPos() { s.x = defX; s.y = defY; s.scale = 1f; }
 

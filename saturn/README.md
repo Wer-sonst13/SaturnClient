@@ -2,8 +2,9 @@
 
 Fabric-Client-Mod (HUD + Menü) und ein schlanker Launcher, der Saturn bei deinen Freunden installiert und aktuell hält.
 
-- **Mod** (`mod/`): Rechts-Shift öffnet das Menü. Module: FPS, Koordinaten, Ping, Uhrzeit, Spotify, Scoreboard (verschieben + skalieren). Im Menü: Elemente mit der Maus ziehen, Mausrad = Größe.
-- **Launcher** (`launcher/`): Tauri (nutzt WebView2 von Windows, ca. 5–10 MB statt ~150 MB bei Electron). Lädt die Saturn-Versionen aus dem neuesten GitHub-Release, richtet Fabric + Fabric API ein und legt ein Profil „Saturn <Version>“ im offiziellen Minecraft Launcher an. Der Login läuft über den offiziellen Launcher.
+- **Mod** (`mod/`): Rechts-Shift öffnet das Menü. Reiter **HUD** (FPS, Koordinaten, Ping, Uhrzeit, Spotify), **PvP** (Keystrokes, CPS, Effekte, Auto-Sprint), **Visuell** (Scoreboard verschieben/skalieren/ausblenden, Fullbright, Keine Partikel), **Sonstiges** (Auto-Reconnect). Im Menü: Elemente mit der Maus ziehen, Mausrad = Größe.
+- **Launcher** (`launcher/`): eigenständiger Minecraft-Launcher (Tauri, wenige MB). Eigene Instanzen (Fabric, 1.21.1 bis neueste), Minecraft/Java/Assets werden selbst geladen, Saturn und Fabric API werden bei jedem Start automatisch aktualisiert, Mods über Modrinth. Daten liegen in `%APPDATA%\Saturn`.
+  Konto: vorerst Offline-Name. Der Microsoft-Login wird später ergänzt (Azure-Client-ID nötig).
 
 ## Einrichten
 1. Neues GitHub-Repo anlegen, diesen Ordner hochladen (`.github/` muss im Root liegen).
@@ -24,6 +25,6 @@ cd launcher && npx @tauri-apps/cli@2 dev
 
 ## Versionsabdeckung
 `mod/src/compat/` enthält pro API-Generation eine kleine `Compat.java`:
-`legacy` = 1.21.1–1.21.5, `gui2` = 1.21.6–1.21.8, `gui3` = 1.21.9–1.21.11.
+`legacy` = 1.21.1–1.21.5, `gui2` = 1.21.6–1.21.8, `gui3` = 1.21.9–1.21.10, `gui4` = 1.21.11.
 Minecraft 26.x (unobfuskiert, Java 25, Loom-Plugin `net.fabricmc.fabric-loom`) braucht eine eigene Schicht und ist noch nicht enthalten.
 Falls der Loom-Build mit „plugin not found“ abbricht: Version in `mod/build.gradle` (`1.15-SNAPSHOT`) anpassen.
