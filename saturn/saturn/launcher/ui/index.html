@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Saturn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="bg"></div>
+  <div id="splash"><span class="planet big"></span><b>SATURN</b></div>
+
+  <header id="top" data-tauri-drag-region>
+    <div class="logo" data-tauri-drag-region><span class="planet"></span><b>Saturn</b></div>
+    <nav id="nav">
+      <button data-act="nav" data-page="home">Menü</button>
+      <button data-act="nav" data-page="mods">Mods</button>
+      <button data-act="nav" data-page="servers">Server</button>
+      <button data-act="nav" data-page="account">Konto</button>
+      <button data-act="nav" data-page="themes">Themes</button>
+      <button data-act="nav" data-page="settings">Einstellungen</button>
+    </nav>
+    <div class="grow" data-tauri-drag-region></div>
+    <button class="iconbtn" data-act="showLog" title="Spiel-Log">Log</button>
+    <button id="chip" class="chip" data-act="nav" data-page="account"><canvas id="avatar" width="24" height="24"></canvas><span id="chipname"></span></button>
+    <div class="wc">
+      <button id="wmin" title="Minimieren">&minus;</button>
+      <button id="wmax" title="Maximieren">&#9633;</button>
+      <button id="wclose" class="x" title="Schließen">&times;</button>
+    </div>
+  </header>
+
+  <div id="layout">
+    <aside>
+      <div class="side-h"><span>INSTANZEN</span><span id="count" class="count">0</span></div>
+      <input id="q" class="input" placeholder="Instanzen durchsuchen" autocomplete="off">
+      <div id="list"></div>
+      <button class="newbtn" data-act="newInst">+ Neue Instanz</button>
+    </aside>
+    <main id="page"></main>
+  </div>
+
+  <footer id="bar">
+    <div id="barinst" class="barinst" data-act="editInst"></div>
+    <div id="barmid" class="barmid"></div>
+    <button id="playbtn" class="play" data-act="play">Spielen</button>
+  </footer>
+
+  <div id="modal" class="modal hidden"></div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
