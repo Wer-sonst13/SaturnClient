@@ -5,6 +5,12 @@ import java.util.function.Consumer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.ConnectScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
+import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
@@ -23,5 +29,10 @@ public final class Compat {
     public static void registerHud(Consumer<GuiGraphics> r) {
         HudElementRegistry.attachElementAfter(VanillaHudElements.CHAT,
             ResourceLocation.fromNamespaceAndPath("saturn", "hud"), (g, dt) -> r.accept(g));
+    }
+
+    public static void reconnect(Minecraft mc, ServerData sd) {
+        ConnectScreen.startConnecting(new JoinMultiplayerScreen(new TitleScreen()), mc,
+            ServerAddress.parseString(sd.ip), sd, false, null);
     }
 }

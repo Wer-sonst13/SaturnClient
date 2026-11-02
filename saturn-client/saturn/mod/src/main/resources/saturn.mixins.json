@@ -2,6 +2,6 @@
   "required": true,
   "package": "dev.saturn.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": ["GuiMixin"],
-  "injectors": { "defaultRequire": 1 }
+  "client": ["GuiMixin", "ParticleEngineMixin"],
+  "injectors": { "defaultRequire": 0 }
 }
